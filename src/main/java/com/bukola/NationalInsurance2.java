@@ -12,6 +12,14 @@ public class NationalInsurance2 implements Taxable{
     BigDecimal totalNI2;
     List<BigDecimal> ni2List;
 
+    public NationalInsurance2(){
+        this(new BigDecimal(0), new BigDecimal(0));
+    }
+
+    public NationalInsurance2(BigDecimal ni2Threshold, BigDecimal weeklyRate) {
+        this.ni2Threshold = ni2Threshold;
+        this.weeklyRate = weeklyRate;
+    }
 
     public void setNI2Threshold(BigDecimal ni2Threshold){
         this.ni2Threshold = ni2Threshold;
@@ -84,11 +92,11 @@ public class NationalInsurance2 implements Taxable{
     }
 
     public static void main(String[] args){
-        NationalInsurance2 ni2 = new NationalInsurance2();
+        NationalInsurance2 ni2 = new NationalInsurance2(new BigDecimal(6205),new BigDecimal(2.85));
         Income income = new Income();
         income.setIncome(new BigDecimal(100));
-        ni2.setWeeklyRate(new BigDecimal(2.85));
-        ni2.setNI2Threshold(new BigDecimal(6205));
+        //ni2.setWeeklyRate(new BigDecimal(2.85));
+        //ni2.setNI2Threshold(new BigDecimal(6205));
         System.out.printf("Week1 Ni2: %s%n", ni2.calculate(income.getWeeklyPay()));
         //ni2.setWeeklyRate(new BigDecimal(2.85));
         income.setIncome(new BigDecimal(7000));
