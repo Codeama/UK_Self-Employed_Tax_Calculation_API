@@ -21,11 +21,12 @@ public class TotalTaxCalculation {
     }
 
     public void setTaxItems(BigDecimal personalAllowance,
-                            BigDecimal ni4Threshold, BigDecimal ni2){
+                            BigDecimal ni4Threshold, BigDecimal ni2, BigDecimal ni2Threshold){
         //this.income.setIncome(income);
         incomeTax.setPersonalTaxAllowance(personalAllowance);
         ni4.setNI4threshold(ni4Threshold);
         this.ni2.setWeeklyRate(ni2);
+        this.ni2.setNI2Threshold(ni2Threshold);
     }
 
     public List<BigDecimal> getTotalWeeklyTaxList(List<BigDecimal> incomeList){
@@ -34,7 +35,7 @@ public class TotalTaxCalculation {
         //calculate ni4 for each
         List<BigDecimal> ni4Payable = ni4.calculate(incomeList);
         //add ni2 till date
-        List<BigDecimal> ni2Payable = ni2.getWeeklyRateList(ni4.getNI4ListSize());
+        List<BigDecimal> ni2Payable = ni2.calculate(incomeList);
 
         //add up calculations for each week
         totalWeeklyTaxList = new ArrayList<>();
@@ -53,7 +54,7 @@ public class TotalTaxCalculation {
         Income income = new Income();
         income.setIncome(new BigDecimal(100));
         tax.setTaxItems(new BigDecimal(11500), new BigDecimal(8424),
-                new BigDecimal(2.85));
+                new BigDecimal(2.85), new BigDecimal(6205));
         System.out.println("Income list: "+ income.getWeeklyPay());
         System.out.printf("Total tax each week: %s%n", tax.getTotalWeeklyTaxList(income.getWeeklyPay()));
         income.setIncome(new BigDecimal(350));

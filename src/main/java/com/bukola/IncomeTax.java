@@ -9,7 +9,7 @@ import java.util.List;
 public class IncomeTax implements Taxable {
     BigDecimal personalTaxAllowance;
     List<BigDecimal> incomeTax;
-    Income income = new Income();
+    //Income income = new Income();
     BigDecimal totalIncomeTax;
 
 
