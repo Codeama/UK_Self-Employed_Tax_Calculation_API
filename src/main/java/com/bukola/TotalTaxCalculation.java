@@ -2,11 +2,9 @@ package com.bukola;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class TotalTaxCalculation {
-    //Income income;
     IncomeTax incomeTax;
     NationalInsurance4 ni4;
     NationalInsurance2 ni2;
@@ -14,19 +12,26 @@ public class TotalTaxCalculation {
     List<BigDecimal> totalTaxPayable;
 
     public TotalTaxCalculation(){
-        //income = new Income();
-        incomeTax = new IncomeTax();
-        ni4 = new NationalInsurance4();
-        ni2 = new NationalInsurance2();
+        this(new BigDecimal(0), new BigDecimal(0),
+                new BigDecimal(0), new BigDecimal(0),
+                new BigDecimal(0));
     }
 
+    public TotalTaxCalculation(BigDecimal personalAllowance, BigDecimal ni4LowThreshold,
+                               BigDecimal ni4HighThreshold, BigDecimal ni2Threshold,
+                               BigDecimal ni2Rate){
+        incomeTax = new IncomeTax(personalAllowance);
+        ni4 = new NationalInsurance4(ni4LowThreshold, ni4HighThreshold);
+        ni2 = new NationalInsurance2(ni2Threshold, ni2Rate);
+            }
+
     public void setTaxItems(BigDecimal personalAllowance,
-                            BigDecimal ni4Threshold, BigDecimal ni2, BigDecimal ni2Threshold){
-        //this.income.setIncome(income);
-        incomeTax.setPersonalTaxAllowance(personalAllowance);
-        ni4.setNI4threshold(ni4Threshold);
-        this.ni2.setWeeklyRate(ni2);
-        this.ni2.setNI2Threshold(ni2Threshold);
+                            BigDecimal ni4LowThreshold,
+                            BigDecimal ni4HighThreshold, BigDecimal ni2Threshold,
+                            BigDecimal ni2Rate){
+        incomeTax = new IncomeTax(personalAllowance);
+        ni4 = new NationalInsurance4(ni4LowThreshold, ni4HighThreshold);
+        ni2 = new NationalInsurance2(ni2Threshold, ni2Rate);
     }
 
     public List<BigDecimal> getTotalWeeklyTaxList(List<BigDecimal> incomeList){
@@ -47,23 +52,5 @@ public class TotalTaxCalculation {
             totalWeeklyTaxList.add(total);
         }
                 return totalWeeklyTaxList;
-    }
-
-    public static void main(String[] args){
-        TotalTaxCalculation tax = new TotalTaxCalculation();
-        Income income = new Income();
-        income.setIncome(new BigDecimal(100));
-        tax.setTaxItems(new BigDecimal(11500), new BigDecimal(8424),
-                new BigDecimal(2.85), new BigDecimal(6205));
-        System.out.println("Income list: "+ income.getWeeklyPay());
-        System.out.printf("Total tax each week: %s%n", tax.getTotalWeeklyTaxList(income.getWeeklyPay()));
-        income.setIncome(new BigDecimal(350));
-        System.out.println("Income list: "+ income.getWeeklyPay());
-        System.out.printf("Total tax each week: %s%n", tax.getTotalWeeklyTaxList(income.getWeeklyPay()));
-        Object[] listArray = tax.getTotalWeeklyTaxList(income.getWeeklyPay()).toArray();
-        for(Object list : listArray)
-            System.out.printf("%s%n", list);
-
-
     }
 }

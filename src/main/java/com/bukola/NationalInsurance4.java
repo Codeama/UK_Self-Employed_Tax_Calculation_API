@@ -7,33 +7,82 @@ import java.util.Iterator;
 import java.util.List;
 
 public class NationalInsurance4 implements Taxable {
-    Income income = new Income();
-    BigDecimal NI4threshold;
+    BigDecimal lowThreshold;
+    BigDecimal highThreshold;
     List<BigDecimal> classNI4List;
     BigDecimal totalNI4ToDate;
 
-
-    public BigDecimal getNI4threshold() {
-        return NI4threshold;
+    public NationalInsurance4(){
+        this(new BigDecimal(0), new BigDecimal(0));
     }
 
-    public void setNI4threshold(BigDecimal NI4threshold) {
-        this.NI4threshold = NI4threshold;
+    public NationalInsurance4(BigDecimal lowThreshold, BigDecimal highThreshold){
+        this.lowThreshold = lowThreshold;
+        this.highThreshold = highThreshold;
+    }
+
+
+    public BigDecimal getLowThreshold() {
+        return lowThreshold;
+    }
+
+    public void setLowThreshold(BigDecimal lowThreshold) {
+        this.lowThreshold = lowThreshold;
+    }
+
+    public BigDecimal getHighThreshold() {
+        return highThreshold;
+    }
+
+    public void setHighThreshold(BigDecimal highThreshold) {
+        this.highThreshold = highThreshold;
     }
 
     @Override
     public List<BigDecimal> calculate(List<BigDecimal> weeklyPayList) {
         classNI4List = new ArrayList<>();
-        //set income and tax property(NI4 threshold)
-        //income.setIncome(pay);
-        //get a list of income entered
-        //weeklyPayList = income.getWeeklyPay();
-        //walk through weekly income and calculate NI4 for each
+        BigDecimal totaIncome = new BigDecimal(0);
         for(BigDecimal wage: weeklyPayList){
-            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(52))
-                    .subtract(NI4threshold)
-                    .divide(new BigDecimal(52))
-                    .multiply(new BigDecimal(0.09));
+            //add up income to check threshold
+            totaIncome = totaIncome.add(wage);
+        }
+
+        //walk through weekly income and calculate NI4 for each
+//        for(BigDecimal wage: weeklyPayList){
+            BigDecimal weeklyClass4NI = new BigDecimal(0);
+            if(totaIncome.compareTo(lowThreshold)>= 0
+                    & totaIncome.compareTo(highThreshold) <= 0){
+                return applyNi4LowThreshold(weeklyPayList);
+            }
+
+            if(totaIncome.compareTo(highThreshold) > 0){
+                return applyNi4HighThreshold(weeklyPayList);
+            }
+
+            else {
+                for (BigDecimal wage : weeklyPayList) {
+                    weeklyClass4NI = new BigDecimal(0);
+                    BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
+                    classNI4List.add(roundUp);
+                }
+            }
+        return classNI4List;
+    }
+
+    public List<BigDecimal> applyNi4HighThreshold(List<BigDecimal> weeklyPayList){
+        classNI4List = new ArrayList<>();
+        for(BigDecimal wage : weeklyPayList){
+            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.09));
+            BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
+            classNI4List.add(roundUp);
+        }
+        return classNI4List;
+    }
+
+    public List<BigDecimal> applyNi4LowThreshold(List<BigDecimal> weeklyPayList){
+        classNI4List = new ArrayList<>();
+        for(BigDecimal wage : weeklyPayList) {
+            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.02));
             BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
             classNI4List.add(roundUp);
         }
@@ -54,14 +103,4 @@ public class NationalInsurance4 implements Taxable {
         return classNI4List.size();
     }
 
-/*
-    public static void main(String[] args){
-        NationalInsurance4 ni4 = new NationalInsurance4(new BigDecimal(8424));
-        List<BigDecimal> ni = ni4.calculate(new BigDecimal(100));
-        System.out.println("NI4 for £100 is: "+ ni);
-        List<BigDecimal> niWeek2 = ni4.calculate(new BigDecimal(350));
-        System.out.println("NI4 for £100 and £350 is: "+ niWeek2);
-        System.out.printf("Total Ni4 to date: %s%n", ni4.getTotalToDate());
-    }
-*/
 }

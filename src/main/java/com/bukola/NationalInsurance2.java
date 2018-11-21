@@ -91,16 +91,4 @@ public class NationalInsurance2 implements Taxable{
         return totalNI2.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public static void main(String[] args){
-        NationalInsurance2 ni2 = new NationalInsurance2(new BigDecimal(6205),new BigDecimal(2.85));
-        Income income = new Income();
-        income.setIncome(new BigDecimal(100));
-        //ni2.setWeeklyRate(new BigDecimal(2.85));
-        //ni2.setNI2Threshold(new BigDecimal(6205));
-        System.out.printf("Week1 Ni2: %s%n", ni2.calculate(income.getWeeklyPay()));
-        //ni2.setWeeklyRate(new BigDecimal(2.85));
-        income.setIncome(new BigDecimal(7000));
-        System.out.printf("Week1 & 2 Ni2: %s%n", ni2.calculate(income.getWeeklyPay()));
-        System.out.printf("Total Ni2 to date: %s%n", ni2.getTotalNI2());
-    }
 }
