@@ -11,11 +11,12 @@ public class IncomeTax implements Taxable {
     private List<BigDecimal> incomeTax;
     private BigDecimal totalIncomeTax;
 
-    public IncomeTax(){
-        this(new BigDecimal(0));
-    }
-
+    
     public IncomeTax(BigDecimal personalTaxAllowance){
+        if(personalTaxAllowance.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException(
+                    "Personal allowance cannot be zero or negative. " +
+                            "Please refer to www.gov.uk for self-employed tax rates.");
         this.personalTaxAllowance = personalTaxAllowance;
     }
 
