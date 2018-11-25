@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Profits {
-    BigDecimal profits;
-    List<BigDecimal> earningsList;
-    BigDecimal totalEarnings;
+    private List<BigDecimal> earningsList;
+    private BigDecimal totalEarnings;
 
     public Profits(){
         earningsList = new ArrayList<>();
@@ -17,7 +16,7 @@ public class Profits {
 
     public void calculateEarnings(List<BigDecimal> wages, List<BigDecimal> expenses){
         for(int i=0; i < wages.size(); i++){
-            profits = new BigDecimal(0);
+            BigDecimal profits;// = new BigDecimal(0);
             profits = wages.get(i).subtract(expenses.get(i));
             BigDecimal roundUp = profits.setScale(2, RoundingMode.HALF_UP);
             earningsList.add(roundUp);

@@ -17,7 +17,7 @@ public class Wages {
 
     }
 
-    public void setIncome(BigDecimal pay){
+    public void setPay(BigDecimal pay){
         BigDecimal roundedUp = pay.setScale(2, RoundingMode.HALF_UP);
         payList.add(roundedUp);
     }

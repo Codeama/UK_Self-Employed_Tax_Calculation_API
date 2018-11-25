@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class IncomeTax implements Taxable {
-    BigDecimal personalTaxAllowance;
-    List<BigDecimal> incomeTax;
-    BigDecimal totalIncomeTax;
+    private BigDecimal personalTaxAllowance;
+    private List<BigDecimal> incomeTax;
+    private BigDecimal totalIncomeTax;
 
     public IncomeTax(){
         this(new BigDecimal(0));
@@ -29,9 +29,9 @@ public class IncomeTax implements Taxable {
     }
 
     @Override
-    public List<BigDecimal> calculate(List<BigDecimal> weeklyIncomeList) {
+    public void calculate(List<BigDecimal> weeklyIncomeList) {
         incomeTax = new ArrayList<>();
-        //income.setIncome(pay);
+        //income.setPay(pay);
         //weeklyIncomeList = income.getWeeklyPayList();
         for(BigDecimal wage: weeklyIncomeList){
             BigDecimal weeklyTax = wage
@@ -43,6 +43,11 @@ public class IncomeTax implements Taxable {
             incomeTax.add(roundUp);
         }
 
+        //return incomeTax;
+    }
+
+    @Override
+    public List<BigDecimal> getList(){
         return incomeTax;
     }
 
@@ -55,5 +60,15 @@ public class IncomeTax implements Taxable {
         }
         return totalIncomeTax.setScale(2, RoundingMode.HALF_UP);
     }
+
+/*
+    public static void main(String[] args){
+        IncomeTax in = new IncomeTax(new BigDecimal(11500));
+        List<BigDecimal> income = new ArrayList<>();
+        income.add(new BigDecimal(100));
+        in.calculate(income);
+        System.out.printf("Income tax for £100: %s%n", in.getList());
+    }
+*/
 
 }

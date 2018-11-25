@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Expenses {
-    BigDecimal totalWeeklyExpenses;
-    List<BigDecimal> expensesList;
+    private BigDecimal totalWeeklyExpenses;
+    private List<BigDecimal> expensesList;
 
     public Expenses(){
         expensesList = new ArrayList<>();
@@ -28,5 +28,11 @@ public class Expenses {
             totalWeeklyExpenses = totalWeeklyExpenses.add(expenses);
         }
         return totalWeeklyExpenses.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static void main(String[] args){
+        Expenses ex = new Expenses();
+        ex.setWeeklyExpenses(new BigDecimal(55));
+        System.out.printf("Expense list: %s%n", ex.getExpensesList());
     }
 }

@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface Taxable {
 
-    List<BigDecimal> calculate(List<BigDecimal> income);
-
+    void calculate(List<BigDecimal> income);
+    List<BigDecimal> getList();
     BigDecimal getTotalToDate();
 }

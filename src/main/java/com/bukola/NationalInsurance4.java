@@ -7,10 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 
 public class NationalInsurance4 implements Taxable {
-    BigDecimal lowThreshold;
-    BigDecimal highThreshold;
-    List<BigDecimal> classNI4List;
-    BigDecimal totalNI4ToDate;
+    private BigDecimal lowThreshold;
+    private BigDecimal highThreshold;
+    private List<BigDecimal> classNI4List;
+    private BigDecimal totalNI4ToDate;
 
     public NationalInsurance4(){
         this(new BigDecimal(0), new BigDecimal(0));
@@ -39,53 +39,76 @@ public class NationalInsurance4 implements Taxable {
     }
 
     @Override
-    public List<BigDecimal> calculate(List<BigDecimal> weeklyPayList) {
+    public void calculate(List<BigDecimal> weeklyPayList) {
         classNI4List = new ArrayList<>();
-        BigDecimal totaIncome = new BigDecimal(0);
-        for(BigDecimal wage: weeklyPayList){
-            //add up income to check threshold
-            totaIncome = totaIncome.add(wage);
+        BigDecimal totalIncome = new BigDecimal(0);
+        //add up income till date
+        for(BigDecimal wage : weeklyPayList)
+            totalIncome = totalIncome.add(wage);
+        BigDecimal weeklyClass4NI = new BigDecimal(0);
+
+        if(minimumThreshold(totalIncome)){
+             //applyNi4LowThreshold(weeklyPayList);
+            applyNI4(weeklyPayList, NIRates.NINE_PERCENT);
         }
 
-        //walk through weekly income and calculate NI4 for each
-//        for(BigDecimal wage: weeklyPayList){
-            BigDecimal weeklyClass4NI = new BigDecimal(0);
-            if(totaIncome.compareTo(lowThreshold)>= 0
-                    & totaIncome.compareTo(highThreshold) <= 0){
-                return applyNi4LowThreshold(weeklyPayList);
-            }
+        if(maximumThreshold(totalIncome)){
+            //applyNi4HighThreshold(weeklyPayList);
+            applyNI4(weeklyPayList, NIRates.TWO_PERCENT);
+        }
 
-            if(totaIncome.compareTo(highThreshold) > 0){
-                return applyNi4HighThreshold(weeklyPayList);
-            }
-
-            else {
-                for (BigDecimal wage : weeklyPayList) {
-                    weeklyClass4NI = new BigDecimal(0);
-                    BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
-                    classNI4List.add(roundUp);
-                }
-            }
-        return classNI4List;
+        else if(totalIncome.compareTo(lowThreshold) < 0){
+           //for (BigDecimal wage : weeklyPayList) {
+               // weeklyClass4NI = new BigDecimal(0);
+             for(int i=0; i<weeklyPayList.size(); i++){
+                BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
+                classNI4List.add(roundUp);
+           }
+        }
+        //return classNI4List;
     }
 
-    public List<BigDecimal> applyNi4HighThreshold(List<BigDecimal> weeklyPayList){
+    public void applyNI4(List<BigDecimal> weeklyPayList, BigDecimal percentage){
         classNI4List = new ArrayList<>();
-        for(BigDecimal wage : weeklyPayList){
-            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.09));
+        for(BigDecimal wage : weeklyPayList) {
+            BigDecimal weeklyClass4NI = wage.multiply(percentage);
             BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
             classNI4List.add(roundUp);
         }
-        return classNI4List;
     }
 
-    public List<BigDecimal> applyNi4LowThreshold(List<BigDecimal> weeklyPayList){
+    private boolean minimumThreshold(BigDecimal totalWages){
+        return (totalWages.compareTo(lowThreshold) >= 0)
+                & (totalWages.compareTo(highThreshold) <= 0);
+    }
+
+    private boolean maximumThreshold(BigDecimal totalWages){
+        return totalWages.compareTo(highThreshold) > 0;
+    }
+
+
+ /*   public void applyNi4HighThreshold(List<BigDecimal> weeklyPayList){
         classNI4List = new ArrayList<>();
-        for(BigDecimal wage : weeklyPayList) {
+        for(BigDecimal wage : weeklyPayList){
             BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.02));
             BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
             classNI4List.add(roundUp);
         }
+        //return classNI4List;
+    }
+
+    public void applyNi4LowThreshold(List<BigDecimal> weeklyPayList){
+        classNI4List = new ArrayList<>();
+        for(BigDecimal wage : weeklyPayList) {
+            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.09));
+            BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
+            classNI4List.add(roundUp);
+        }
+        //return classNI4List;
+    }
+*/
+    @Override
+    public List<BigDecimal> getList(){
         return classNI4List;
     }
 
@@ -99,8 +122,24 @@ public class NationalInsurance4 implements Taxable {
         return  totalNI4ToDate.setScale(2, RoundingMode.HALF_UP);
     }
 
+    public static void main(String[] args){
+        NationalInsurance4 ni = new NationalInsurance4();
+        ni.setLowThreshold(new BigDecimal(8424));
+        ni.setHighThreshold(new BigDecimal(46350));
+        Wages wages = new Wages();
+        wages.setPay(new BigDecimal(100));
+        wages.setPay(new BigDecimal(350));
+        //wages.setPay(new BigDecimal(9450));
+        //wages.setPay(new BigDecimal(400));
+        System.out.printf("pay list: %s%n", wages.getWeeklyPayList());
+        ni.calculate(wages.getWeeklyPayList());
+        System.out.printf("Ni4 to date: %s%n", ni.getList());
+    }
+
+/*
     public int getNI4ListSize(){
         return classNI4List.size();
     }
+*/
 
 }
