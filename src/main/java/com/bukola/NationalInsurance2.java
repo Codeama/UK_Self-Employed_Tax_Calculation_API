@@ -22,17 +22,10 @@ public class NationalInsurance2 implements Taxable{
         this.weeklyRate = weeklyRate;
     }
 
-    public void setNI2Threshold(BigDecimal ni2Threshold){
-        this.ni2Threshold = ni2Threshold;
-    }
-
     public BigDecimal getNi2Threshold(){
         return ni2Threshold;
     }
 
-    public void setWeeklyRate(BigDecimal weeklyRate) {
-        this.weeklyRate = weeklyRate;
-    }
 
     public BigDecimal getWeeklyRate() {
         return weeklyRate.setScale(2, RoundingMode.HALF_UP);

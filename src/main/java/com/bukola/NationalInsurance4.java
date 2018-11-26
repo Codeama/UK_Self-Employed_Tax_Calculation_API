@@ -29,22 +29,9 @@ public class NationalInsurance4 implements Taxable {
         return lowThreshold;
     }
 
-    public void setLowThreshold(BigDecimal lowThreshold) {
-        if(lowThreshold.compareTo(BigDecimal.ZERO) <= 0)
-            throw new IllegalArgumentException("Thresholds cannot be zero or a negative value.");
-
-        this.lowThreshold = lowThreshold;
-    }
 
     public BigDecimal getHighThreshold() {
         return highThreshold;
-    }
-
-    public void setHighThreshold(BigDecimal highThreshold) {
-        if(highThreshold.compareTo(BigDecimal.ZERO) <= 0)
-            throw new IllegalArgumentException("Thresholds cannot be zero or a negative value.");
-
-        this.highThreshold = highThreshold;
     }
 
     @Override
@@ -57,24 +44,19 @@ public class NationalInsurance4 implements Taxable {
         BigDecimal weeklyClass4NI = new BigDecimal(0);
 
         if(minimumThreshold(totalIncome)){
-             //applyNi4LowThreshold(weeklyPayList);
             applyNI4(weeklyPayList, NINE_PERCENT);
         }
 
         if(maximumThreshold(totalIncome)){
-            //applyNi4HighThreshold(weeklyPayList);
             applyNI4(weeklyPayList, TWO_PERCENT);
         }
 
         else if(totalIncome.compareTo(lowThreshold) < 0){
-           //for (BigDecimal wage : weeklyPayList) {
-               // weeklyClass4NI = new BigDecimal(0);
              for(int i=0; i<weeklyPayList.size(); i++){
                 BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
                 classNI4List.add(roundUp);
            }
         }
-        //return classNI4List;
     }
 
     public void applyNI4(List<BigDecimal> weeklyPayList, BigDecimal percentage){
@@ -96,26 +78,6 @@ public class NationalInsurance4 implements Taxable {
     }
 
 
- /*   public void applyNi4HighThreshold(List<BigDecimal> weeklyPayList){
-        classNI4List = new ArrayList<>();
-        for(BigDecimal wage : weeklyPayList){
-            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.02));
-            BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
-            classNI4List.add(roundUp);
-        }
-        //return classNI4List;
-    }
-
-    public void applyNi4LowThreshold(List<BigDecimal> weeklyPayList){
-        classNI4List = new ArrayList<>();
-        for(BigDecimal wage : weeklyPayList) {
-            BigDecimal weeklyClass4NI = wage.multiply(new BigDecimal(0.09));
-            BigDecimal roundUp = weeklyClass4NI.setScale(2, RoundingMode.HALF_UP);
-            classNI4List.add(roundUp);
-        }
-        //return classNI4List;
-    }
-*/
     @Override
     public List<BigDecimal> getList(){
         return classNI4List;
