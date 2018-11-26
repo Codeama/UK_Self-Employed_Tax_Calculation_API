@@ -74,9 +74,16 @@ class TotalTaxCalculationTest {
             expected.add(new BigDecimal(1698.72).setScale(2, RoundingMode.HALF_UP));
             assertEquals(expected, totals);
         }
+
+        @Test
+        @DisplayName("Running total of tax payable should be 1746.66")
+        void getTotalToDate1() {
+            BigDecimal expected = new BigDecimal(1746.66);
+            assertEquals(expected.setScale(2, RoundingMode.HALF_UP),
+                    tax.getTotalToDate());
+        }
+
     }
 
-   /* @Test
-    void getTotalToDate1() {
-    }*/
+
 }

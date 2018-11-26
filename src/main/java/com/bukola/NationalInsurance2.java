@@ -12,11 +12,12 @@ public class NationalInsurance2 implements Taxable{
     private BigDecimal totalNI2;
     private List<BigDecimal> ni2List;
 
-    public NationalInsurance2(){
-        this(new BigDecimal(0), new BigDecimal(0));
-    }
 
     public NationalInsurance2(BigDecimal ni2Threshold, BigDecimal weeklyRate) {
+        if(ni2Threshold.compareTo(BigDecimal.ZERO) <= 0 |
+                weeklyRate.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException(
+                    "NI2 threshold or weekly rate cannot be zero or a negative number.");
         this.ni2Threshold = ni2Threshold;
         this.weeklyRate = weeklyRate;
     }
@@ -31,22 +32,11 @@ public class NationalInsurance2 implements Taxable{
 
     public void setWeeklyRate(BigDecimal weeklyRate) {
         this.weeklyRate = weeklyRate;
-//        BigDecimal roundUp = weeklyRate.setScale(2, RoundingMode.HALF_UP);
-//        ni2List.add(roundUp);
     }
 
     public BigDecimal getWeeklyRate() {
         return weeklyRate.setScale(2, RoundingMode.HALF_UP);
     }
-
-/*
-    public List<BigDecimal> getWeeklyRateList(int ni4ListSize){
-        for(int i = 0; i < ni4ListSize; i++){
-            ni2List.add(getWeeklyRate());
-        }
-        return ni2List;
-    }
-*/
 
 
     @Override
@@ -56,7 +46,6 @@ public class NationalInsurance2 implements Taxable{
         Iterator<BigDecimal> iterator = incomeList.iterator();
         while(iterator.hasNext()){
             totalPay = totalPay.add(iterator.next());
-            //totalPay.setScale(2, RoundingMode.HALF_UP);
         }
 
         if(totalPay.compareTo(ni2Threshold) >= 0) {
@@ -66,7 +55,7 @@ public class NationalInsurance2 implements Taxable{
         }
         else{
             for (int i = 0; i < incomeList.size(); i++) {
-                ni2List.add(new BigDecimal(0));
+                ni2List.add(new BigDecimal(0).setScale(2, RoundingMode.HALF_UP));
             }
 
         }

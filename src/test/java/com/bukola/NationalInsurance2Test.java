@@ -16,7 +16,9 @@ class NationalInsurance2Test {
 
     @BeforeAll
     void setUp() {
-        ni2 = new NationalInsurance2();
+        BigDecimal threshold = new BigDecimal(6205);
+        BigDecimal weeklyRate = new BigDecimal(2.95);
+        ni2 = new NationalInsurance2(threshold, weeklyRate);
         income = new ArrayList<>();
         actual = new ArrayList<>();
     }
@@ -24,8 +26,6 @@ class NationalInsurance2Test {
     @Test
     @DisplayName("Given low threshold is set at 6,205 and weekly rate is set at 2.95")
     void getNi2ThresholdAndRate() {
-        ni2.setNI2Threshold(new BigDecimal(6205));
-        ni2.setWeeklyRate(new BigDecimal(2.95));
         assertEquals(new BigDecimal(6205), ni2.getNi2Threshold(), "threshold should be 6205");
         assertEquals(new BigDecimal(2.95).setScale(2, RoundingMode.HALF_UP),
                 ni2.getWeeklyRate(), "weekly rate should be 2.95");

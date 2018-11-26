@@ -18,12 +18,13 @@ class IncomeTaxTest {
 
     @BeforeAll
     void setUp() {
-        tax = new IncomeTax();
-        tax.setPersonalTaxAllowance(new BigDecimal(11500));
+        tax = new IncomeTax(new BigDecimal(11500));
+        //tax.setPersonalTaxAllowance(new BigDecimal(11500));
         income = new ArrayList<>();
         expected = new ArrayList<>();
         actual = new ArrayList<>();
     }
+
 
     @Test
     @DisplayName("Given personal allowance rate is set at 11,500")

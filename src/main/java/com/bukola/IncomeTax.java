@@ -11,7 +11,7 @@ public class IncomeTax implements Taxable {
     private List<BigDecimal> incomeTax;
     private BigDecimal totalIncomeTax;
 
-    
+
     public IncomeTax(BigDecimal personalTaxAllowance){
         if(personalTaxAllowance.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException(

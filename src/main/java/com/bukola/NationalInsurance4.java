@@ -11,12 +11,15 @@ public class NationalInsurance4 implements Taxable {
     private BigDecimal highThreshold;
     private List<BigDecimal> classNI4List;
     private BigDecimal totalNI4ToDate;
+    private final BigDecimal TWO_PERCENT = new BigDecimal(0.02);
+    private final BigDecimal NINE_PERCENT = new BigDecimal(0.09);
 
-    public NationalInsurance4(){
-        this(new BigDecimal(0), new BigDecimal(0));
-    }
 
     public NationalInsurance4(BigDecimal lowThreshold, BigDecimal highThreshold){
+        if(lowThreshold.compareTo(BigDecimal.ZERO) <= 0
+                | highThreshold.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("Thresholds cannot be zero or a negative value.");
+
         this.lowThreshold = lowThreshold;
         this.highThreshold = highThreshold;
     }
@@ -27,6 +30,9 @@ public class NationalInsurance4 implements Taxable {
     }
 
     public void setLowThreshold(BigDecimal lowThreshold) {
+        if(lowThreshold.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("Thresholds cannot be zero or a negative value.");
+
         this.lowThreshold = lowThreshold;
     }
 
@@ -35,6 +41,9 @@ public class NationalInsurance4 implements Taxable {
     }
 
     public void setHighThreshold(BigDecimal highThreshold) {
+        if(highThreshold.compareTo(BigDecimal.ZERO) <= 0)
+            throw new IllegalArgumentException("Thresholds cannot be zero or a negative value.");
+
         this.highThreshold = highThreshold;
     }
 
@@ -49,12 +58,12 @@ public class NationalInsurance4 implements Taxable {
 
         if(minimumThreshold(totalIncome)){
              //applyNi4LowThreshold(weeklyPayList);
-            applyNI4(weeklyPayList, NIRates.NINE_PERCENT);
+            applyNI4(weeklyPayList, NINE_PERCENT);
         }
 
         if(maximumThreshold(totalIncome)){
             //applyNi4HighThreshold(weeklyPayList);
-            applyNI4(weeklyPayList, NIRates.TWO_PERCENT);
+            applyNI4(weeklyPayList, TWO_PERCENT);
         }
 
         else if(totalIncome.compareTo(lowThreshold) < 0){
@@ -122,6 +131,7 @@ public class NationalInsurance4 implements Taxable {
         return  totalNI4ToDate.setScale(2, RoundingMode.HALF_UP);
     }
 
+/*
     public static void main(String[] args){
         NationalInsurance4 ni = new NationalInsurance4();
         ni.setLowThreshold(new BigDecimal(8424));
@@ -135,6 +145,7 @@ public class NationalInsurance4 implements Taxable {
         ni.calculate(wages.getWeeklyPayList());
         System.out.printf("Ni4 to date: %s%n", ni.getList());
     }
+*/
 
 /*
     public int getNI4ListSize(){

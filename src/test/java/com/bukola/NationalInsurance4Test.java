@@ -17,16 +17,14 @@ class NationalInsurance4Test {
 
     @BeforeAll
     void setUp() {
-        ni4 = new NationalInsurance4();
+        ni4 = new NationalInsurance4(new BigDecimal(8424), new BigDecimal(46350));
         income = new ArrayList<>();
         actual = new ArrayList<>();
     }
 
     @Test
     @DisplayName("Given low threshold is 8,424 and high threshold is 46,350")
-    void setLowThreshold1() {
-        ni4.setLowThreshold(new BigDecimal(8424));
-        ni4.setHighThreshold(new BigDecimal(46350));
+    void setThresholds() {
         assertEquals(new BigDecimal(8424), ni4.getLowThreshold(), "low threshold should be 8424");
         assertEquals(new BigDecimal(46350), ni4.getHighThreshold(), "high threshold should be 46350");
     }
