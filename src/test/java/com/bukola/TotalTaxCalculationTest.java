@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class TotalTaxCalculationTest {
 
     TotalTaxCalculation tax;
-    BigDecimal personalAllowance1;
+    BigDecimal personalAllowance;
     BigDecimal ni4LowThreshold1;
     BigDecimal ni4HighThreshold1;
     BigDecimal ni2Threshold1;
@@ -22,23 +22,27 @@ class TotalTaxCalculationTest {
     List<BigDecimal> totals;
 
     @BeforeAll
+    @Test
+    @DisplayName("Given personal allowance(11500), NI4 thresholds(6424, 46350)" +
+            "NI2 threshold(6205) and NI2 weekly rate(2.95) are set")
     void setUp() {
-        tax = new TotalTaxCalculation();
-        personalAllowance1 = new BigDecimal(11500);
+        personalAllowance = new BigDecimal(11500);
         ni4LowThreshold1 = new BigDecimal(6424);
         ni4HighThreshold1 = new BigDecimal(46350);
         ni2Threshold1 = new BigDecimal(6205);
         ni2Rate1 = new BigDecimal(2.95);
+        tax = new TotalTaxCalculation(personalAllowance, ni4LowThreshold1,
+                ni4HighThreshold1, ni2Threshold1, ni2Rate1);
         income = new ArrayList<>();
         totals = new ArrayList<>();
     }
 
+/*
+    @Disabled
     @Test
     @DisplayName("Given personal allowance(11500), NI4 thresholds(6424, 46350)" +
             "NI2 threshold(6205) and NI2 weekly rate(2.95) are set")
     void setTaxItems() {
-        tax.setTaxItems(personalAllowance1, ni4LowThreshold1,
-                ni4HighThreshold1, ni2Threshold1, ni2Rate1);
         assertEquals(new BigDecimal(11500), tax.getPersonalAllowance(),
                 "personal allowance should be 11500");
         assertEquals(new BigDecimal(6424), tax.getNi4LowThreshold(),
@@ -49,6 +53,7 @@ class TotalTaxCalculationTest {
                 "NI2threshold should be 6205");
         assertEquals(new BigDecimal(2.95), tax.getNi2Rate(), "NI2 rate should be 2.95");
     }
+*/
 
     @Nested
     @DisplayName("if user enters earnings for 3 weeks")
