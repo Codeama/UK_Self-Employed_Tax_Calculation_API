@@ -16,7 +16,7 @@ public class Profits {
 
     public void calculateEarnings(List<BigDecimal> wages, List<BigDecimal> expenses){
         for(int i=0; i < wages.size(); i++){
-            BigDecimal profits;// = new BigDecimal(0);
+            BigDecimal profits;
             profits = wages.get(i).subtract(expenses.get(i));
             BigDecimal roundUp = profits.setScale(2, RoundingMode.HALF_UP);
             earningsList.add(roundUp);
