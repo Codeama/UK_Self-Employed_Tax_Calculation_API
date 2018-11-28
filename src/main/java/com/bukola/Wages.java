@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Wages {
-    private BigDecimal pay;
     private BigDecimal totalPay;
     private List<BigDecimal> payList;
 

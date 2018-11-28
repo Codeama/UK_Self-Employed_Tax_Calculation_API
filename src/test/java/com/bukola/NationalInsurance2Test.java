@@ -33,7 +33,7 @@ class NationalInsurance2Test {
 
 
     @Test
-    @DisplayName("And user enters income of 350")
+    @DisplayName("And user enters profit of 350")
     void calculate1() {
         income.add(new BigDecimal(350));
         System.out.printf("Income: %s%n", income);
@@ -62,11 +62,11 @@ class NationalInsurance2Test {
     class NationalInsurance2Test2{
 
         @Test
-        @DisplayName("Given user then enters income of 6000")
+        @DisplayName("Given user then enters profit of 6000")
         void calculate(){
             income.add(new BigDecimal(6000));
             ni2.calculate(income);
-            System.out.printf("income: %s%n", income);
+            System.out.printf("profit: %s%n", income);
             actual = ni2.getList();
             System.out.printf("NI2 list: %s%n", actual);
         }

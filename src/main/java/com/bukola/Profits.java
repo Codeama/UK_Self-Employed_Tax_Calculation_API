@@ -15,6 +15,23 @@ public class Profits {
 
 
     public void calculateEarnings(List<BigDecimal> wages, List<BigDecimal> expenses){
+        if (wages.size() > expenses.size()){
+            //check size difference
+            int sizeUp = wages.size() - expenses.size();
+            for(int i = 0; i < sizeUp; i++){
+                //add zero(s) to expenses to match up(this assumes no expenses for the week(s))
+                expenses.add(BigDecimal.ZERO);
+            }
+        }
+
+        if(expenses.size() > wages.size()){
+            //check size difference
+            int sizeUp = expenses.size() - wages.size();
+            for(int i = 0; i < sizeUp; i++){
+               //add zero(s) to expenses to match up(this assumes no income for the week(s))
+               wages.add(BigDecimal.ZERO);
+            }
+        }
         for(int i=0; i < wages.size(); i++){
             BigDecimal profits;
             profits = wages.get(i).subtract(expenses.get(i));

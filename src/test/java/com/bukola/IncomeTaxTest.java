@@ -13,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class IncomeTaxTest {
     IncomeTax tax;
     List<BigDecimal> actual;
-    List<BigDecimal> income;
+    List<BigDecimal> profit;
     List<BigDecimal> expected;
 
     @BeforeAll
     void setUp() {
         tax = new IncomeTax(new BigDecimal(11500));
         //tax.setPersonalTaxAllowance(new BigDecimal(11500));
-        income = new ArrayList<>();
+        profit = new ArrayList<>();
         expected = new ArrayList<>();
         actual = new ArrayList<>();
     }
@@ -35,16 +35,16 @@ class IncomeTaxTest {
     }
 
     @Test
-    @DisplayName("And user enters 100")
+    @DisplayName("And user enters profit of 100 for a week")
     void calculate() {
-        income.add(new BigDecimal(100).setScale(2, RoundingMode.HALF_UP));
-        tax.calculate(income);
+        profit.add(new BigDecimal(100).setScale(2, RoundingMode.HALF_UP));
+        tax.calculate(profit);
         actual = tax.getList();
-        System.out.printf("Earnings: %s%n", income);
+        System.out.printf("Earnings: %s%n", profit);
     }
 
     @Test
-    @DisplayName("then 20% tax should be -24.23")
+    @DisplayName("then 20% tax for the week should be -24.23")
     void getTax(){
         expected = new ArrayList<>();
         expected.add(new BigDecimal(-24.23).setScale(2, RoundingMode.HALF_UP));
@@ -64,16 +64,16 @@ class IncomeTaxTest {
     @Nested
     class IncomeTaxTest2{
         @Test
-        @DisplayName("Given user then enters 350")
+        @DisplayName("Given user then enters profit of 350")
         void calculate(){
-            income.add(new BigDecimal(350).setScale(2, RoundingMode.HALF_UP));
-            tax.calculate(income);
+            profit.add(new BigDecimal(350).setScale(2, RoundingMode.HALF_UP));
+            tax.calculate(profit);
             actual = tax.getList();
-            System.out.printf("Earnings: %s%n", income);
+            System.out.printf("Earnings: %s%n", profit);
         }
 
         @Test
-        @DisplayName("tax list should contain -24.33 and 25.77")
+        @DisplayName("20% tax list should contain -24.33 and 25.77")
         void getTax(){
             expected.add(new BigDecimal(25.77).setScale(2, RoundingMode.HALF_UP));
             assertEquals(expected, actual);

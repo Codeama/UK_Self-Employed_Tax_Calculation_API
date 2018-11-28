@@ -58,7 +58,7 @@ class NationalInsurance4Test {
     @Nested
     class NationalInsurance4Test2{
         @Test
-        @DisplayName("Given user then enters income of 9450")
+        @DisplayName("Given user then enters profit of 9450")
         void calculate(){
             income.add(new BigDecimal(9450));
             ni4.calculate(income);

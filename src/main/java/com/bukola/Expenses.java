@@ -24,6 +24,7 @@ public class Expenses {
 
     public BigDecimal getTotalWeeklyExpenses() {
         totalWeeklyExpenses = new BigDecimal(0);
+
         for(BigDecimal expenses: expensesList){
             totalWeeklyExpenses = totalWeeklyExpenses.add(expenses);
         }
