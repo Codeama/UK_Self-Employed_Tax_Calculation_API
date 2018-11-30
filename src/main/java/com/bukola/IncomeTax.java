@@ -6,12 +6,21 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Class for Income Tax calculations.
+ * All results are rounded up with BigDecimal RoundingMode.HALF_UP.
+ */
 public class IncomeTax implements Taxable {
     private BigDecimal personalTaxAllowance;
     private List<BigDecimal> incomeTax;
     private BigDecimal totalIncomeTax;
 
-
+    /**
+     * Class constructor.
+     * @param personalTaxAllowance this is the personal allowance for every tax payer
+     *                             before tax deductions. See www.gov.uk for current rate.
+     *                             This value cannot be zero.
+     */
     public IncomeTax(BigDecimal personalTaxAllowance){
         if(personalTaxAllowance.compareTo(BigDecimal.ZERO) <= 0)
             throw new IllegalArgumentException(
@@ -20,21 +29,24 @@ public class IncomeTax implements Taxable {
         this.personalTaxAllowance = personalTaxAllowance;
     }
 
-
+    /**
+     * Returns tax allowance vale for the year entered during class initialization.
+     * @return
+     */
     public BigDecimal getPersonalTaxAllowance() {
         return personalTaxAllowance.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public void setPersonalTaxAllowance(BigDecimal personalTaxAllowance) {
-        this.personalTaxAllowance = personalTaxAllowance;
-    }
-
+    /**
+     * Calculates income tax due on each weekly earnings,
+     * normally 20% after personal allowance
+     * @param profit this is taxable income after expenses.
+     * @see Profits
+     */
     @Override
-    public void calculate(List<BigDecimal> weeklyIncomeList) {
+    public void calculate(List<BigDecimal> profit) {
         incomeTax = new ArrayList<>();
-        //income.setPay(pay);
-        //weeklyIncomeList = income.getWeeklyPayList();
-        for(BigDecimal wage: weeklyIncomeList){
+        for(BigDecimal wage: profit){
             BigDecimal weeklyTax = wage
                     .multiply(new BigDecimal(52))
                     .subtract(personalTaxAllowance)
@@ -43,15 +55,21 @@ public class IncomeTax implements Taxable {
             BigDecimal roundUp = weeklyTax.setScale(2, RoundingMode.HALF_UP);
             incomeTax.add(roundUp);
         }
-
-        //return incomeTax;
     }
 
+    /**
+     * Returns a list view of all tax due for each week's earnings.
+     * @return list of type BigDecimal
+     */
     @Override
     public List<BigDecimal> getList(){
         return incomeTax;
     }
 
+    /**
+     * Returns a running total of tax due to date.
+     * @return type BigDecimal.
+     */
     @Override
     public BigDecimal getTotalToDate() {
         totalIncomeTax = new BigDecimal(0);
@@ -61,15 +79,5 @@ public class IncomeTax implements Taxable {
         }
         return totalIncomeTax.setScale(2, RoundingMode.HALF_UP);
     }
-
-/*
-    public static void main(String[] args){
-        IncomeTax in = new IncomeTax(new BigDecimal(11500));
-        List<BigDecimal> income = new ArrayList<>();
-        income.add(new BigDecimal(100));
-        in.calculate(income);
-        System.out.printf("Income tax for £100: %s%n", in.getList());
-    }
-*/
 
 }

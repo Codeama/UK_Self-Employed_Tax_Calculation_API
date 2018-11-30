@@ -8,6 +8,10 @@ import java.util.List;
 
 import static java.math.BigDecimal.ZERO;
 
+/**
+ * Class for computing weekly total tax.
+ * (Class 2 & 4 National Insurance and 20% income tax)
+ */
 public class TotalTaxCalculation implements Taxable {
     private IncomeTax incomeTax;
     private NationalInsurance4 ni4;
@@ -15,22 +19,19 @@ public class TotalTaxCalculation implements Taxable {
     private List<BigDecimal> totalWeeklyTaxList;
     private BigDecimal totalTaxPayable;
 
-    BigDecimal personalAllowance;
-    BigDecimal ni4LowThreshold;
-    BigDecimal ni4HighThreshold;
-    BigDecimal ni2Threshold;
-    BigDecimal ni2Rate;
-
-/*
-    public TotalTaxCalculation(){
-        this(new BigDecimal(0), new BigDecimal(0),
-                new BigDecimal(0), new BigDecimal(0),
-                new BigDecimal(0));
-        totalWeeklyTaxList = new ArrayList<>();
-        totalTaxPayable = new BigDecimal(0);
-    }
-*/
-
+    /**
+     * Class constructor.
+     * @param personalAllowance this is the personal allowance entered for IncomeTax calculations
+     * @see IncomeTax#getPersonalTaxAllowance()
+     * @param ni4LowThreshold this is the minimum value for class 4 NI deductions
+     * @see NationalInsurance4#getLowThreshold()
+     * @param ni4HighThreshold this is the maximum value entered for class 4 NI deductions
+     * @see NationalInsurance4#getHighThreshold()
+     * @param ni2Threshold this is the minimum value before class 2 NI becomes payable
+     * @see NationalInsurance2#getNi2Threshold()
+     * @param ni2Rate this is the annual weekly rate for National Insurance2
+     * @see NationalInsurance2#getWeeklyRate()
+     */
     public TotalTaxCalculation(BigDecimal personalAllowance, BigDecimal ni4LowThreshold,
                                BigDecimal ni4HighThreshold, BigDecimal ni2Threshold,
                                BigDecimal ni2Rate){
@@ -50,85 +51,16 @@ public class TotalTaxCalculation implements Taxable {
         totalTaxPayable = new BigDecimal(0);
     }
 
-/*
-    public BigDecimal getPersonalAllowance() {
-        return personalAllowance;
-    }
-
-    public void setPersonalAllowance(BigDecimal personalAllowance) {
-        this.personalAllowance = personalAllowance;
-    }
-
-    public BigDecimal getNi4LowThreshold() {
-        return ni4LowThreshold;
-    }
-*/
-/*
-
-    public void setNi4LowThreshold(BigDecimal ni4LowThreshold) {
-        this.ni4LowThreshold = ni4LowThreshold;
-    }
-*//*
-
-
-    public BigDecimal getNi4HighThreshold() {
-        return ni4HighThreshold;
-    }
-
-*/
-/*
-    public void setNi4HighThreshold(BigDecimal ni4HighThreshold) {
-        this.ni4HighThreshold = ni4HighThreshold;
-    }
-*//*
-
-
-    public BigDecimal getNi2Threshold() {
-        return ni2Threshold;
-    }
-*/
-/*
-
-    public void setNi2Threshold(BigDecimal ni2Threshold) {
-        this.ni2Threshold = ni2Threshold;
-    }
-*//*
-
-
-    public BigDecimal getNi2Rate() {
-        return ni2Rate;
-    }
-*/
-
- /*   public void setNi2Rate(BigDecimal ni2Rate) {
-        this.ni2Rate = ni2Rate;
-    }
-*/
-/*
-    public void setTaxItems(BigDecimal personalAllowance,
-                            BigDecimal ni4LowThreshold,
-                            BigDecimal ni4HighThreshold, BigDecimal ni2Threshold,
-                            BigDecimal ni2Rate){
-*/
-/*
-        this.personalAllowance = personalAllowance;
-        this.ni4LowThreshold = ni4LowThreshold;
-        this.ni4HighThreshold = ni4HighThreshold;
-        this.ni2Threshold = ni2Threshold;
-        this.ni2Rate = ni2Rate;
-*//*
-
-        incomeTax = new IncomeTax(this.personalAllowance);
-        ni4 = new NationalInsurance4(this.ni4LowThreshold, this.ni4HighThreshold);
-        ni2 = new NationalInsurance2(this.ni2Threshold, this.ni2Rate);
-    }
-*/
-
+    /**
+     * calculates a weekly sum total of all tax items-
+     * NI2, NI4, Income Tax.
+     * @param profit this is taxable income after expenses.
+     */
     @Override
-    public void calculate(List<BigDecimal> incomeList) {
-        incomeTax.calculate(incomeList);
-        ni4.calculate(incomeList);
-        ni2.calculate(incomeList);
+    public void calculate(List<BigDecimal> profit) {
+        incomeTax.calculate(profit);
+        ni4.calculate(profit);
+        ni2.calculate(profit);
 
         //calculate income tax for each pay entry
         List<BigDecimal> incomeTaxPayable = incomeTax.getList();
@@ -138,17 +70,27 @@ public class TotalTaxCalculation implements Taxable {
         List<BigDecimal> ni2Payable = ni2.getList();
 
         //add up calculations for each week
-        for (int i = 0; i < incomeList.size(); i++) {
+        for (int i = 0; i < profit.size(); i++) {
             BigDecimal total = incomeTaxPayable.get(i).add(ni4Payable.get(i).add(ni2Payable.get(i)));
             totalWeeklyTaxList.add(total);
         }
     }
 
+    /**
+     * Returns a list view of a weekly running total of payabletax.
+     * @return list of type BigDecimal
+     */
     @Override
     public List<BigDecimal> getList(){
         return totalWeeklyTaxList;
     }
 
+    /**
+     * Returns a running total of annual tax payable till date.
+     * This can be used to compute the total annual tax after 52 weeks,
+     * using the tax year calendar.
+     * @return type BigDecimal
+     */
     @Override
     public BigDecimal getTotalToDate() {
         Iterator<BigDecimal> totalIterator = totalWeeklyTaxList.iterator();
@@ -157,17 +99,4 @@ public class TotalTaxCalculation implements Taxable {
         return totalTaxPayable.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public static void main(String[] args){
-        TotalTaxCalculation tax = new TotalTaxCalculation(new BigDecimal(11500),
-                new BigDecimal(6424),new BigDecimal(46350),
-                new BigDecimal(6205), new BigDecimal(2.95));
-        //tax.setTaxItems(new BigDecimal(11500), new BigDecimal(6424),
-        //        new BigDecimal(46350), new BigDecimal(6205), new BigDecimal(2.95));
-        List<BigDecimal> income = new ArrayList<>();
-        income.add(new BigDecimal(100));
-        income.add(new BigDecimal(350));
-        income.add(new BigDecimal(6000));
-        tax.calculate(income);
-        System.out.printf("Totals: %s%n", tax.getList());
-    }
 }
