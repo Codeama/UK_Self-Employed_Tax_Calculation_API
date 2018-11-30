@@ -23,7 +23,7 @@ class WagesTest {
     @DisplayName("Given user enters 100.97")
     @Test
     void setPay() {
-        wage.setPay(new BigDecimal(100.97));
+        wage.addPay(new BigDecimal(100.97));
     }
 
 
@@ -48,8 +48,8 @@ class WagesTest {
         @DisplayName("Given user then enters 100 and 350")
         @Test
         void setPay(){
-            wage.setPay(new BigDecimal(100));
-            wage.setPay(new BigDecimal(350));
+            wage.addPay(new BigDecimal(100));
+            wage.addPay(new BigDecimal(350));
         }
 
         @Test

@@ -22,7 +22,7 @@ class ExpensesTest {
     @Test
     @DisplayName("Given user enters 90")
     void setWeeklyExpenses() {
-        expenses.setWeeklyExpenses(new BigDecimal(90));
+        expenses.addWeeklyExpense(new BigDecimal(90));
     }
 
     @Test
@@ -47,7 +47,7 @@ class ExpensesTest {
         @Test
         @DisplayName("Given user then enters 0")
         void setWeeklyExpenses(){
-            expenses.setWeeklyExpenses(new BigDecimal(0.50));
+            expenses.addWeeklyExpense(new BigDecimal(0.50));
         }
 
         @Test

@@ -17,13 +17,13 @@ class ProfitsTest {
 
     @BeforeAll
     void setUp() {
-        profit = new Profits();
         wage = new ArrayList<>();
         expenses  = new ArrayList<>();
         wage.add(new BigDecimal(500));
         wage.add(new BigDecimal(15));
         wage.add(new BigDecimal(300));
         expenses.add(new BigDecimal(44));
+        profit = new Profits(wage, expenses);
 
     }
 
@@ -53,7 +53,7 @@ class ProfitsTest {
     @Test
     @DisplayName("Calculate earnings")
     void calculateEarnings1() {
-        profit.calculateEarnings(wage, expenses);
+        profit.calculateEarnings();
     }
 
     @Test
@@ -90,7 +90,6 @@ class ProfitsTest2{
 
     @BeforeAll
     void setUp() {
-        profit = new Profits();
         wage = new ArrayList<>();
         expenses  = new ArrayList<>();
         wage.add(new BigDecimal(0));
@@ -98,7 +97,7 @@ class ProfitsTest2{
         expenses.add(new BigDecimal(25));
         expenses.add(new BigDecimal(44));
         expenses.add(new BigDecimal(250));
-
+        profit = new Profits(wage, expenses);
     }
 
     @Test
@@ -126,7 +125,7 @@ class ProfitsTest2{
     @Test
     @DisplayName("Calculate earnings")
     void calculateEarnings1() {
-        profit.calculateEarnings(wage, expenses);
+        profit.calculateEarnings();
     }
 
     @Test
