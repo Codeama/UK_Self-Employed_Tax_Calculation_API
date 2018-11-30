@@ -128,7 +128,9 @@ public class NationalInsurance4 implements Taxable {
     }
 
     /**
-     * Returns a running total of all weekly Ni4 deductions to date
+     * Returns a running total of all weekly Ni4 deductions to date.
+     * This can be used to compute the total annual NI4 after 52 weeks,
+     * using the tax calendar.
      * @return type BigDecimal
      */
     @Override

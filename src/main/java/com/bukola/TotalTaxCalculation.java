@@ -88,7 +88,7 @@ public class TotalTaxCalculation implements Taxable {
     /**
      * Returns a running total of annual tax payable till date.
      * This can be used to compute the total annual tax after 52 weeks,
-     * using the tax year calendar.
+     * using the tax calendar.
      * @return type BigDecimal
      */
     @Override

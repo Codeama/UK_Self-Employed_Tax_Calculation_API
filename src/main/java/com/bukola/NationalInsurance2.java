@@ -87,7 +87,9 @@ public class NationalInsurance2 implements Taxable{
     }
 
     /**
-     * returns a sum total of class 2 National Insurance due to date
+     * returns a sum total of class 2 National Insurance due to date.
+     * This can be used to compute the total annual NI2 after 52 weeks,
+     * using the tax calendar.
      * @return type BigDecimal
      */
     @Override
