@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Bukola Jimoh
  * Class for recording expenses on a weekly basis.
  * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
