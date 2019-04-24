@@ -1,4 +1,4 @@
-# TaxCalculationAPI
+# UK Self-Employed Tax Calculation API
 A simple UK self-employed tax calculation API written in Java and fully tested with JUnit5.
 Testing style is mostly BDD which also explains basic use cases as a whole, like an integration test. 
 
@@ -20,7 +20,7 @@ The test suite for the API can be found in the test [folder](https://github.com/
 This API can be integrated into any self-employed application that requires a UK tax calculation.
 
 ## Documentation
-The API documentation can be found [here](https://codeama.github.io/TaxCalculationAPI/)
+The API documentation can be found [here](https://codeama.github.io/UK_Self-Employed_Tax_Calculation_API/)
 
 ## Technologies Used
 - Java - this API was compiled and build against Java 8 (openJDK 8)
