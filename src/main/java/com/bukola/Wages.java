@@ -8,7 +8,7 @@ import java.util.List;
 
 
 /**
- * A class for entering payments recieved or wages on a weekly basis.
+ * Class for entering payments recieved or wages on a weekly basis.
  * This is processed as a List.
  * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  * */

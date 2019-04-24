@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This is a class for computing Class 2 National Insurance.
+ * Class for computing Class 2 National Insurance.
  * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
 public class NationalInsurance2 implements Taxable{

@@ -7,7 +7,7 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * This is a class for Income Tax calculations.
+ * Class for Income Tax calculations.
  * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
 public class IncomeTax implements Taxable {
