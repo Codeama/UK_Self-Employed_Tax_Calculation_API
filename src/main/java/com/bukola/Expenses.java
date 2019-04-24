@@ -8,6 +8,8 @@ import java.util.List;
 /**
  * Class for recording expenses on a weekly basis.
  * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
+ * NOTE: The smallest unit of expense is the total of a week's expenses.
+ * Client should create a smaller unit of daily expenses where needed.
  */
 public class Expenses {
     private BigDecimal totalExpenses;

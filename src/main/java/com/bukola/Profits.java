@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * Class for computing total profit each week.
+ * NOTE: smallest unit of profit is the total of a week's profit.
  * Profit is actual taxable earnings/income
  * Can be used in conjunction with Wages and Expenses classes.
  * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
