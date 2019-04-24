@@ -28,4 +28,4 @@ The API documentation can be found [here.](https://codeama.github.io/UK_Self-Emp
 - Intellij IDEA
 
 ## Download
-The jar file can be found here.
+Download the executable jar from [Releases.](https://github.com/Codeama/UK_Self-Employed_Tax_Calculation_API/releases)
