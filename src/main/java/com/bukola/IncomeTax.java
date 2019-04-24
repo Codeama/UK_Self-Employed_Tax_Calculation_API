@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Class for Income Tax calculations.
- * All results are rounded up with BigDecimal RoundingMode.HALF_UP.
+ * This is a class for Income Tax calculations.
+ * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
 public class IncomeTax implements Taxable {
     private BigDecimal personalTaxAllowance;
@@ -17,9 +17,9 @@ public class IncomeTax implements Taxable {
 
     /**
      * Class constructor.
-     * @param personalTaxAllowance this is the personal allowance for every tax payer
-     *                             before tax deductions. See www.gov.uk for current rate.
-     *                             This value cannot be zero.
+     * @param personalTaxAllowance this is the personal allowance for every UK tax payer
+     *                             before tax deductions. See www.gov.uk for current rates.
+     *                             This value cannot be zero - throws an Exception.
      */
     public IncomeTax(BigDecimal personalTaxAllowance){
         if(personalTaxAllowance.compareTo(BigDecimal.ZERO) <= 0)
@@ -30,15 +30,15 @@ public class IncomeTax implements Taxable {
     }
 
     /**
-     * Returns tax allowance vale for the year entered during class initialization.
-     * @return
+     * Getter method that returns tax allowance value that has been set during class initialization for the year concerned.
+     * @return tax allowance value
      */
     public BigDecimal getPersonalTaxAllowance() {
         return personalTaxAllowance.setScale(2, RoundingMode.HALF_UP);
     }
 
     /**
-     * Calculates income tax due on each weekly earnings,
+     * Calculates income tax due for each week's earnings,
      * normally 20% after personal allowance
      * @param profit this is taxable income after expenses.
      * @see Profits
@@ -58,7 +58,7 @@ public class IncomeTax implements Taxable {
     }
 
     /**
-     * Returns a list view of all tax due for each week's earnings.
+     * Returns a list of all taxes due for each week's earnings.
      * @return list of type BigDecimal
      */
     @Override
@@ -68,9 +68,9 @@ public class IncomeTax implements Taxable {
 
     /**
      * Returns a running total of tax due to date.
-     * This can be used to compute the total annual tax after 52 weeks,
+     * This can be used to compute the total annual tax over a 52 week period,
      * using the tax calendar.
-     * @return type BigDecimal.
+     * @return a running total of tax due to date
      */
     @Override
     public BigDecimal getTotalToDate() {

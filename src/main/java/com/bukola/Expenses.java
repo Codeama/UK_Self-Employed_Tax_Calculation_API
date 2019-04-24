@@ -7,55 +7,55 @@ import java.util.List;
 
 /**
  * @author Bukola Jimoh
- * Class for recording expenses on a weekly basis as List.
- * All results are rounded up with BigDecimal RoundingMode.HALF_UP.
+ * Class for recording expenses on a weekly basis.
+ * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
 public class Expenses {
-    private BigDecimal totalWeeklyExpenses;
+    private BigDecimal totalExpenses;
     private List<BigDecimal> expensesList;
 
     /**
-     * Class constructor.
+     * This is the class constructor.
      */
     public Expenses(){
         expensesList = new ArrayList<>();
     }
 
     /**
-     * adds weekly expenses to a list rounded up with BigDecimal RoundingMode.HALF_UP.
-     * @param weeklyExpenses expense of type BigDecimal
+     * adds up each expense.
+     * @param expense a single unit of expense
      */
-    public void addWeeklyExpense(BigDecimal weeklyExpenses) {
-        BigDecimal expenses = weeklyExpenses.setScale(2, RoundingMode.HALF_UP);
+    public void addExpense(BigDecimal expense) {
+        BigDecimal expenses = expense.setScale(2, RoundingMode.HALF_UP);
         expensesList.add(expenses);
     }
 
     /**
-     * a list view of expenses entered to date.
+     * a list of expenses recorded to date.
      * @return a list of type BigDecimal
      */
-    public List<BigDecimal> getExpensesList() {
+    public List<BigDecimal> getAllExpenses() {
         return expensesList;
     }
 
     /**
-     * sum of all expenses entered to date rounded up with BigDecimal RoundingMode.HALF_UP.
+     * this method returns a sum of all expenses recorded to date.
      * @return a running total of all expenses to date
      */
-    public BigDecimal getTotalWeeklyExpenses() {
-        totalWeeklyExpenses = new BigDecimal(0);
+    public BigDecimal getTotalExpenses() {
+        totalExpenses = new BigDecimal(0);
 
         for(BigDecimal expenses: expensesList){
-            totalWeeklyExpenses = totalWeeklyExpenses.add(expenses);
+            totalExpenses = totalExpenses.add(expenses);
         }
-        return totalWeeklyExpenses.setScale(2, RoundingMode.HALF_UP);
+        return totalExpenses.setScale(2, RoundingMode.HALF_UP);
     }
 
 /*
     public static void main(String[] args){
         Expenses ex = new Expenses();
-        ex.addWeeklyExpense(new BigDecimal(55));
-        System.out.printf("Expense list: %s%n", ex.getExpensesList());
+        ex.addExpense(new BigDecimal(55));
+        System.out.printf("Expense list: %s%n", ex.getAllExpenses());
     }
 */
 }

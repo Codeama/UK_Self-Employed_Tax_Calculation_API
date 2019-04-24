@@ -10,7 +10,7 @@ import static java.math.BigDecimal.ZERO;
 
 /**
  * Class for computing weekly total tax.
- * (Class 2 & 4 National Insurance and 20% income tax)
+ * (Class 2, class 4 National Insurance and 20% income tax)
  */
 public class TotalTaxCalculation implements Taxable {
     private IncomeTax incomeTax;
@@ -77,8 +77,8 @@ public class TotalTaxCalculation implements Taxable {
     }
 
     /**
-     * Returns a list view of a weekly running total of payabletax.
-     * @return list of type BigDecimal
+     * Returns a list of a weekly running total of payable tax.
+     * @return a list of running total for each tax week
      */
     @Override
     public List<BigDecimal> getList(){
@@ -86,10 +86,10 @@ public class TotalTaxCalculation implements Taxable {
     }
 
     /**
-     * Returns a running total of annual tax payable till date.
-     * This can be used to compute the total annual tax after 52 weeks,
+     * Returns a running total of annual tax payable to date.
+     * This can be used to compute the total annual tax over a 52 week period,
      * using the tax calendar.
-     * @return type BigDecimal
+     * @return running total of payable tax
      */
     @Override
     public BigDecimal getTotalToDate() {

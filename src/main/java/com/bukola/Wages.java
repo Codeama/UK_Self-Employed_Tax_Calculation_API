@@ -8,10 +8,9 @@ import java.util.List;
 
 
 /**
- * @author Bukola Jimoh
- * A class for entering payments recieved/wages on a weekly basis.
+ * A class for entering payments recieved or wages on a weekly basis.
  * This is processed as a List.
- * All results are rounded up with BigDecimal RoundingMode.HALF_UP.
+ * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  * */
 public class Wages {
     private BigDecimal totalPay;
@@ -25,8 +24,8 @@ public class Wages {
     }
 
     /**
-     * method for entering each payment/wage.
-     * @param pay payments to add of type BigDecimal
+     * method for recording each payment/wage.
+     * @param pay payments to add
      */
     public void addPay(BigDecimal pay){
         BigDecimal roundedUp = pay.setScale(2, RoundingMode.HALF_UP);
@@ -34,16 +33,16 @@ public class Wages {
     }
 
     /**
-     * returns a list view of weekly wages/payments entered to date.
-     * @return a list of type BigDecimal
+     * returns a list of weekly wages/payments entered to date.
+     * @return a list of payments
      */
     public List<BigDecimal> getWeeklyPayList(){
         return payList;
     }
 
     /**
-     * sums up all wages entered to date.
-     * @return running total of wages entered to date
+     * sums up all payments received to date.
+     * @return running total of payments recorded to date
      */
     public BigDecimal getTotalPayToDate(){
         totalPay = new BigDecimal(0);

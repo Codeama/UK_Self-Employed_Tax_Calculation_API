@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Class for class 4 National Insurance.
- * All results are rounded up with BigDecimal RoundingMode.HALF_UP.
+ * Class for computing class 4 National Insurance.
+ * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
 public class NationalInsurance4 implements Taxable {
     private BigDecimal lowThreshold;
@@ -22,9 +22,9 @@ public class NationalInsurance4 implements Taxable {
     /**
      * Class constructor.
      * @param lowThreshold this is the minimum profit set before
-     *                    self-employed people start to pay 9% of earnings
+     *                    self-employed individuals start to pay 9% of their earnings
      * @param highThreshold this is the maximum profit limit set before
-     *                      they start to pay 9% of earnings, or 2% if earnings
+     *                      they start to pay 9% of their earnings, or 2% if/when earnings
      *                      are higher than this value.
      */
     public NationalInsurance4(BigDecimal lowThreshold, BigDecimal highThreshold){
@@ -37,8 +37,8 @@ public class NationalInsurance4 implements Taxable {
     }
 
     /**
-     * Returns the lower limit threshold set at initialization.
-     * @return type BigDecimal.
+     * Returns the lower threshold set during class initialization.
+     * @return low threshold.
      */
     public BigDecimal getLowThreshold() {
         return lowThreshold;
@@ -46,7 +46,7 @@ public class NationalInsurance4 implements Taxable {
 
     /**
      * Returns higher/maximum threshold set at initialization.
-     * @return type BigDecimal.
+     * @return threshold entered at initialization.
      */
     public BigDecimal getHighThreshold() {
         return highThreshold;
@@ -59,8 +59,8 @@ public class NationalInsurance4 implements Taxable {
      * and less than or equal to the higher threshold.
      * Two percent is applied to total earning that are higher than the high threshold.
      * Computations are applied to weekly earnings after getting a total of earnings till date.
-     * So as soon as total earnings meet one of the thresholds, earnings become deductible.
-     * But while earnings are below the minimum, no National Insurance is deducted.
+     * Soon as total earnings meet one of the thresholds, class 4 National Insurance become deductible.
+     * But while earnings are below the minimum, no National Insurance 4 is deducted.
      * @param profit this is taxable income after expenses.
      * @see Profits
      */
@@ -91,9 +91,9 @@ public class NationalInsurance4 implements Taxable {
 
     /**
      * This applies National Insurance class 4 regardless of whether
-     * or not the earnings reach the thresholds. It can be used in situations where the
-     * total annual earnings is already known and the appropriate NI4 percentage can be entered.
-     * @param weeklyPayList this is the list of earnings entered to date.
+     * or not the earnings reach the thresholds. It is a convenience method that can be used in situations where the
+     * total annual earnings is already known beforehand and the appropriate NI4 percentage can be entered.
+     * @param weeklyPayList this is the list of earnings recorded to date.
      * @see Profits
      * @param percentage this is the appropriate NI4 percentage to be applied. Visit www.gov.uk
      *                   for actual percentages. But this is usually 9% of total earnings if
@@ -119,8 +119,8 @@ public class NationalInsurance4 implements Taxable {
     }
 
     /**
-     * Returns a list view of all NI4 deductions due for each week's earnings.
-     * @return list of type BigDecimal.
+     * Returns a list of all NI4 deductions due for each week's earnings.
+     * @return list of weekly NI4 deductions due to date.
      */
     @Override
     public List<BigDecimal> getList(){
@@ -128,10 +128,10 @@ public class NationalInsurance4 implements Taxable {
     }
 
     /**
-     * Returns a running total of all weekly Ni4 deductions to date.
-     * This can be used to compute the total annual NI4 after 52 weeks,
+     * Returns a running total of all weekly NI4 calculations to date.
+     * This can be used to compute the total annual NI4 over a 52 week period,
      * using the tax calendar.
-     * @return type BigDecimal
+     * @return a running total of NI4 calculations.
      */
     @Override
     public BigDecimal getTotalToDate(){

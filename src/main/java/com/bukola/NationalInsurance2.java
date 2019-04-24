@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Class for Class 2 National Insurance.
- * All results are rounded up with BigDecimal RoundingMode.HALF_UP.
+ * This is a class for computing Class 2 National Insurance.
+ * All results are rounded up using BigDecimal RoundingMode.HALF_UP.
  */
 public class NationalInsurance2 implements Taxable{
     private BigDecimal ni2Threshold;
@@ -21,7 +21,7 @@ public class NationalInsurance2 implements Taxable{
      * Class constructor.
      * @param ni2Threshold this is the specified annual threshold for
      * self-employed Class 2 National Insurance for the year concerned.
-     * @param weeklyRate this is the weekly rate due for the year concerned.
+     * @param weeklyRate this is the weekly rate due for the tax year concerned.
      */
     public NationalInsurance2(BigDecimal ni2Threshold, BigDecimal weeklyRate) {
         if(ni2Threshold.compareTo(BigDecimal.ZERO) <= 0 |
@@ -33,8 +33,8 @@ public class NationalInsurance2 implements Taxable{
     }
 
     /**
-     * returns the annual threshold entered in the constructor.
-     * @return type BigDecimal
+     * returns the annual threshold entered in the class constructor.
+     * @return annual threshold for NI2 that was entered during class initialization.
      */
     public BigDecimal getNi2Threshold(){
         return ni2Threshold;
@@ -42,8 +42,8 @@ public class NationalInsurance2 implements Taxable{
 
 
     /**
-     * returns the weekly rate entered during class initialization.
-     * @return weeklyRate
+     * returns the weekly rate for NI2 entered during class initialization.
+     * @return weeklyRate for NI2
      */
     public BigDecimal getWeeklyRate() {
         return weeklyRate.setScale(2, RoundingMode.HALF_UP);
@@ -52,7 +52,7 @@ public class NationalInsurance2 implements Taxable{
 
     /**
      * Calculates class 2 National Insurance due to date for each self-employment work week.
-     * @param profit list of earnings entered to date.
+     * @param profit list of earnings recorded to date.
      * @see Profits
      */
     @Override
@@ -78,8 +78,8 @@ public class NationalInsurance2 implements Taxable{
     }
 
     /**
-     * returns a list view of class 2 National Insurance due to date.
-     * @return list of type BigDecimal
+     * returns a list of class 2 National Insurance due to date.
+     * @return list of class 2 National Insurance
      */
     @Override
     public List<BigDecimal> getList(){
@@ -88,9 +88,9 @@ public class NationalInsurance2 implements Taxable{
 
     /**
      * returns a sum total of class 2 National Insurance due to date.
-     * This can be used to compute the total annual NI2 after 52 weeks,
+     * This can be used to compute the total annual NI2 over a 52 week period,
      * using the tax calendar.
-     * @return type BigDecimal
+     * @return running total of class 2 National Insurance
      */
     @Override
     public BigDecimal getTotalToDate() {

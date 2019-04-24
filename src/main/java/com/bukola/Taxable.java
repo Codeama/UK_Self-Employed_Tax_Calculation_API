@@ -14,21 +14,21 @@ import java.util.List;
 public interface Taxable {
 
     /**
-     * Calculates tax/national insurance due.
+     * Calculates tax and national insurance due.
      * @param profit this is taxable income after expenses.
      * @see Profits
      */
     void calculate(List<BigDecimal> profit);
 
     /**
-     * list view of tax/national insurance deducted to date.
-     * @return list of type BigDecimal
+     * list of tax/national insurance deducted to date.
+     * @return list of tax and national insurance
      */
     List<BigDecimal> getList();
 
     /**
      * Sum total of tax/national insurance deducted to date
-     * @return type BigDecimal
+     * @return running total of tax and national insurance
      */
     BigDecimal getTotalToDate();
 }

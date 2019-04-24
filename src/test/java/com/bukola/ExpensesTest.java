@@ -16,13 +16,13 @@ class ExpensesTest {
     @BeforeAll
     void setUp() {
         expenses = new Expenses();
-        actual = expenses.getExpensesList();
+        actual = expenses.getAllExpenses();
     }
 
     @Test
     @DisplayName("Given user enters 90")
     void setWeeklyExpenses() {
-        expenses.addWeeklyExpense(new BigDecimal(90));
+        expenses.addExpense(new BigDecimal(90));
     }
 
     @Test
@@ -30,8 +30,8 @@ class ExpensesTest {
     void getExpensesListTest() {
         List<BigDecimal> expected = new ArrayList<>();
         expected.add(new BigDecimal(90).setScale(2, RoundingMode.HALF_UP));
-        assertEquals(expected, expenses.getExpensesList());
-        System.out.printf("Expenses: %s%n", expenses.getExpensesList());
+        assertEquals(expected, expenses.getAllExpenses());
+        System.out.printf("Expenses: %s%n", expenses.getAllExpenses());
     }
 
     @Test
@@ -39,7 +39,7 @@ class ExpensesTest {
     void getTotalExpensesTest() {
         BigDecimal expected = new BigDecimal(90);
         assertEquals(expected.setScale(2, RoundingMode.HALF_UP),
-                expenses.getTotalWeeklyExpenses());
+                expenses.getTotalExpenses());
     }
 
     @Nested
@@ -47,7 +47,7 @@ class ExpensesTest {
         @Test
         @DisplayName("Given user then enters 0")
         void setWeeklyExpenses(){
-            expenses.addWeeklyExpense(new BigDecimal(0.50));
+            expenses.addExpense(new BigDecimal(0.50));
         }
 
         @Test
@@ -56,8 +56,8 @@ class ExpensesTest {
             List<BigDecimal> expected = new ArrayList<>();
             expected.add(new BigDecimal(90).setScale(2, RoundingMode.HALF_UP));
             expected.add(new BigDecimal(0.50).setScale(2, RoundingMode.HALF_UP));
-            assertEquals(expected, expenses.getExpensesList());
-            System.out.printf("Expenses: %s%n", expenses.getExpensesList());
+            assertEquals(expected, expenses.getAllExpenses());
+            System.out.printf("Expenses: %s%n", expenses.getAllExpenses());
         }
 
         @Test
@@ -65,8 +65,8 @@ class ExpensesTest {
         void getTotalExpenses(){
             BigDecimal expected = new BigDecimal(90.50);
             assertEquals(expected.setScale(2, RoundingMode.HALF_UP),
-                    expenses.getTotalWeeklyExpenses());
-            System.out.printf("Total expenses: %s%n", expenses.getTotalWeeklyExpenses());
+                    expenses.getTotalExpenses());
+            System.out.printf("Total expenses: %s%n", expenses.getTotalExpenses());
         }
 
     }
