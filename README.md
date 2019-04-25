@@ -23,7 +23,7 @@ This API can be integrated into any self-employed application that requires a UK
 The API documentation can be found [here.](https://codeama.github.io/UK_Self-Employed_Tax_Calculation_API/)
 
 ## Technologies Used
-- Java - this API was compiled and build against Java 8 (openJDK 8)
+- Java - this API was compiled and built against Java 8 (openJDK 8)
 - JUnit5
 - Intellij IDEA
 
