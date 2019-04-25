@@ -1,6 +1,6 @@
 # UK Self-Employed Tax Calculation API
 A simple UK self-employed tax calculation API written in Java and fully tested with JUnit5.
-Testing style is mostly BDD which also explains basic use cases as a whole, like an integration test. 
+Testing style is mostly BDD which also explains basic use cases. 
 
 The smallest unit for computation is a weekly value. This is informed by the fact that the UK self-employment tax is calculated on a weekly basis. For example, a self-employed NI2 is usually a weekly flat rate. See [self-employment National Insurance rates](https://www.gov.uk/self-employed-national-insurance-rates). The API is applicable to taxable income up to a limit of £150,000 and therefore not applicable to income higher than this threshold. 
 
